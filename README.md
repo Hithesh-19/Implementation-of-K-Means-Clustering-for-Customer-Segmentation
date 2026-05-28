@@ -20,67 +20,49 @@ Program to implement the K Means Clustering for Customer Segmentation.
 Developed by: 
 RegisterNumber: 
 
-import pandas as pd
+
+
+
+```import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 
-# ------------------------------
-# Step 1: Sample dataset
-# ------------------------------
-data = {
-    'CustomerID': [1,2,3,4,5,6,7,8,9,10],
-    'Gender': ['Male','Female','Female','Male','Female','Male','Male','Female','Female','Male'],
-    'Age': [19,21,20,23,31,22,35,30,25,28],
-    'Annual Income (k$)': [15,16,17,18,19,20,21,22,23,24],
-    'Spending Score (1-100)': [39,81,6,77,40,76,6,94,3,72]
-}
+df = pd.read_csv("Mall_Customers.csv")
 
-df = pd.DataFrame(data)
+print(df.head())
 
-# ------------------------------
-# Step 2: Select features for clustering
-# ------------------------------
 X = df[['Annual Income (k$)', 'Spending Score (1-100)']]
 
-# ------------------------------
-# Step 3: Apply K-Means (choose clusters, e.g., 3)
-# ------------------------------
-kmeans = KMeans(n_clusters=3, init='k-means++', random_state=42)
-df['Cluster'] = kmeans.fit_predict(X)  # Automatically fits and assigns clusters
+model = KMeans(n_clusters=5, random_state=42)
 
-# ------------------------------
-# Step 4: Visualize clusters
-# ------------------------------
-plt.figure(figsize=(8,6))
-for i in range(3):
-    plt.scatter(X[df['Cluster']==i]['Annual Income (k$)'],
-                X[df['Cluster']==i]['Spending Score (1-100)'],
-                label=f'Cluster {i+1}')
+df['Cluster'] = model.fit_predict(X)
 
-# Plot centroids
-plt.scatter(kmeans.cluster_centers_[:,0], kmeans.cluster_centers_[:,1],
-            s=200, c='yellow', label='Centroids', marker='X')
-
-plt.title('Customer Segmentation (K-Means)')
-plt.xlabel('Annual Income (k$)')
-plt.ylabel('Spending Score (1-100)')
-plt.legend()
-plt.show()
-
-# ------------------------------
-# Step 5: Show dataset with clusters
-# ------------------------------
 print(df)
-*/
 
+plt.scatter(
+    X['Annual Income (k$)'],
+    X['Spending Score (1-100)'],
+    c=df['Cluster']
+)
 
+plt.scatter(
+    model.cluster_centers_[:,0],
+    model.cluster_centers_[:,1],
+    color='red',
+    marker='X',
+    s=200
+)
+
+plt.xlabel("Annual Income")
+plt.ylabel("Spending Score")
+plt.title("Customer Segmentation using K-Means")
+
+plt.show()
 ```
-
 ## Output:
-<img width="1301" height="782" alt="image" src="https://github.com/user-attachments/assets/3d095ad9-83c7-4b7f-b4b2-5689a88fcd09" />
+<img width="1026" height="726" alt="Screenshot 2026-05-28 202047" src="https://github.com/user-attachments/assets/330e9c3e-c8f6-4963-9c04-96dd0a2a34d2" />
+<img width="729" height="462" alt="Screenshot 2026-05-28 202059" src="https://github.com/user-attachments/assets/61a854cc-21ab-46ec-b785-a448ae5c7507" />
 
-## Result:
-Thus the program to implement the K Means Clustering for Customer Segmentation is written and verified using python programming.
 
 ## Result:
 Thus the program to implement the K Means Clustering for Customer Segmentation is written and verified using python programming.
